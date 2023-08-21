@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 var fs = require('fs');
 const config = require('config');
-const picURI = config.get('picURI');
+const picURI =  "./nodejs_pic/"; //config.get('picURI');
 
 
 //  @route  GET api/posts
@@ -10,6 +10,9 @@ const picURI = config.get('picURI');
 //  @access Public
 router.get('/:id', (req, res) => {
     let file=  req.params.id;
+    // const currentDirectory = process.cwd();
+    // console.log('Current working directory:', currentDirectory);
+    
     if (!fs.existsSync(picURI + file)) 
       file="default.png";
     fs.readFile(picURI + file, function (err,data) {

@@ -3,8 +3,8 @@ const router = express.Router();
 const auth = require('../../middleware/auth')
 const Inventory = require('../../models/inventory');
 var fs = require('fs')
-const config = require('config');
-const picURI = config.get('picURI');
+// const config = require('config');
+const picURI =  "./nodejs_pic/"; //config.get('picURI');
 
 
 //  @route  GET api/profile/me

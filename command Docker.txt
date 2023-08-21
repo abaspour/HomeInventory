@@ -1,0 +1,20 @@
+## create docker network
+docker network create mongo-network
+
+## start mongodb
+docker run -p27017:27017 -d     -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password 	--network mongo-network --name mongodb 	mongo
+
+## start mongo-express
+docker run -p8081:8081 -d -e ME_CONFIG_MONGODB_ADMINUSERNAME=admin -e ME_CONFIG_MONGODB_ADMINPASSWORD=password --network mongo-network --name mongo-express -e  ME_CONFIG_MONGODB_SERVER=mongodb mongo-express
+
+
+docker-compose -f mongo.yaml up
+
+docker build -t my-app:1.0 .
+
+docker run -d -p5000:5000 --network homeinventory_default my-app:1.0 
+docker exec -it fbfjkghd /bin/sh
+
+docker rm 879979
+docker rmi kk
+docker ps

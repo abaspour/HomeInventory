@@ -5,8 +5,8 @@ const User = require('../../models/User');
 const {check, validationResult} = require('express-validator');
 var fs = require('fs');
 const Inventory = require('../../models/inventory');
-const config = require('config');
-const picURI = config.get('picURI');
+// const config = require('config');
+const picURI =  "./nodejs_pic/"; //config.get('picURI');
 
 router.post('/update/:id',
 [
@@ -68,7 +68,7 @@ router.post('/update-upload-photo/:id'
             file.mv(`${picURI}${req.params.id}`, (err) => {
               if (err) {
                 const i=0;
-                i++;
+            
                 res.status(500).json({ errors:[{ msg :'Server upload faild'} ] } );
               } else{
                 res.json('User account updated!');
