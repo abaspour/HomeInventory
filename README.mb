@@ -36,6 +36,9 @@ MERN STack application that will help home owners keep track of their inventory 
 ### 9.	Stunning UI
  - Fully responsive user interface that renders well on mobile devices.
 
+### 10. Docker and also Kubernetes
+ - Commands & yaml files to run under Docker or Kubernetes
+
 
 
 # Author

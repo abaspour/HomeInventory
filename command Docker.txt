@@ -7,9 +7,11 @@ docker run -p27017:27017 -d     -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INI
 ## start mongo-express
 docker run -p8081:8081 -d -e ME_CONFIG_MONGODB_ADMINUSERNAME=admin -e ME_CONFIG_MONGODB_ADMINPASSWORD=password --network mongo-network --name mongo-express -e  ME_CONFIG_MONGODB_SERVER=mongodb mongo-express
 
-
+##  put them to yaml and run yaml
 docker-compose -f mongo.yaml up
+docker-compose -f mongo.yaml down
 
+## build image  according to Dockerfile
 docker build -t my-app:1.0 .
 
 docker run -d -p5000:5000 --network homeinventory_default my-app:1.0 
@@ -18,3 +20,74 @@ docker exec -it fbfjkghd /bin/sh
 docker rm 879979
 docker rmi kk
 docker ps
+
+
+##          K U B E R N E T E S
+#############################################
+## statefullSet             <<<>>> Deployment
+## database must be statefull
+## many access at a same time to database
+## sync 
+
+## node=machine has multi pod on Kubelet and loadbalance with  service ingress(dns) volumes
+## secret configMap podBluePrint=Deployment && statefullSet
+
+## worker machinein k8 cluster
+## 3 node processes 1. Kubelet 2 kube proxy 3. container runtime
+
+## Master processes
+##     Api Server = cluster gateway 1 entry
+##     Scheduler = smart of k8
+##     controller manager    detect state change and report to schduler
+##     etcd = memory key value
+
+
+## commands after install minikube
+##create minikube cluster
+minikube start --vm-driver=hyperkit
+minikube start <!----> on my machine worked
+         onmy machine to run kubectl type --> minikube kubectl -- <!---means-> kubectl
+
+
+minikube status  <!--- know must be ->runnung		 
+minikube kubectl version
+
+##delete cluster and restart in debug mode
+minikube delete
+minikube start --vm-driver=hyperkit --v=7 --alsologtostderr
+minikube status
+
+##kubectl commands
+minikube kubectl get nodes
+minikube kubectl --  get pod
+minikube kubectl --  get services
+###    in this env Deployment is abstraction for pod 
+minikube kubectl --  create deployment nginx-depl --image=nginx
+minikube kubectl --  get deployment
+minikube kubectl --  get pod
+minikube kubectl --  get replicaset
+minikube kubectl --  edit deployment nginx-depl
+
+##debugging
+minikube kubectl --  logs {pod-name}
+minikube kubectl --  exec -it {pod-name} -- bin/bash
+
+##create mongo deployment
+minikube kubectl --  create deployment mongo-depl --image=mongo
+minikube kubectl --  logs mongo-depl-{pod-name}
+minikube kubectl --  describe pod mongo-depl-{pod-name}
+
+##delete deplyoment
+minikube kubectl --  delete deployment mongo-depl
+minikube kubectl --  delete deployment nginx-depl
+
+##create or edit config file
+vim nginx-deployment.yaml
+minikube kubectl --  apply -f nginx-deployment.yaml
+minikube kubectl --  get pod -o wide
+minikube kubectl --  get deployment
+minikube kubectl --  get deployment nginx-deployment -o yaml > fileNameResult.yaml
+
+##delete with config
+minikube kubectl --  delete -f nginx-deployment.yaml
+minikube kubectl --  get all
