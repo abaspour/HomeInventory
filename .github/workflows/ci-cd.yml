@@ -1,0 +1,30 @@
+name CICD Pipeline
+
+on
+  push
+    branches
+      - main
+
+jobs
+  build
+    runs-on ubuntu-latest
+
+    steps
+      - name Checkout code
+        uses actionscheckout@v2
+
+      - name Install dependencies
+        run npm install
+
+      - name Run tests
+        run npm test
+
+  deploy
+    needs build
+    runs-on ubuntu-latest
+
+    steps
+      - name Deploy to production (replace with your deployment method)
+        run 
+          # Add your deployment commands here
+          # e.g., deploy to a cloud provider or push to a container registry

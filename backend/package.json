@@ -4,6 +4,7 @@
   "description": "Home Inventory",
   "main": "server.js",
   "scripts": {
+    "test": "mocha",
     "start": "node server",
     "server": "nodemon server"
   },
@@ -24,7 +25,11 @@
     "request": "^2.88.2"
   },
   "devDependencies": {
+    "chai": "^4.3.8",
+    "chai-http": "^4.4.0",
     "concurrently": "^7.3.0",
-    "nodemon": "^2.0.19"
+    "mocha": "^10.2.0",
+    "nodemon": "^2.0.19",
+    "supertest": "^6.3.3"
   }
 }
